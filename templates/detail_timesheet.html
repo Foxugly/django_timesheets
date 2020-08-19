@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load bootstrap4 static i18n hijack_tags common_tags %}
+{% block content %}
+<div class=" row justify-content-center mt-1">
+  <h1>{{model|verbose_name }} {{object.name}}</h1>
+</div>
+<div class="row justify-content-end">
+  <a href="{{object.get_change_url}}" class="btn btn-success"><span class="fa fa-edit"></span> {% trans 'edit' %}</a>
+</div>
+<div class="row">
+  <div class="card col-md-12">
+    <div class="card-header">
+      <h5 class="float-left">Tags</h5><a class="btn btn-primary float-right" href=""><span class="fa fa-plus"></span> Add Tag</a>
+    </div>
+    <div class="card-body">
+      {% for t in object.get_tags %}
+      <a class="btn btn-sm btn-tag" href="{% url 'tag:tag_detail' t.pk %}" role="button" style="background-color: {{t.color}};">{{t}}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card col-md-12">
+    <div class="card-header">
+      <h5 class="float-left">Users</h5><a class="btn btn-primary float-right" href="{% url 'user:user_add' %}?timesheet_id={{object.id}}"><span class="fa fa-plus"></span> Add User</a>
+    </div>
+    <div class="card-body">
+      {% for u in object.get_users %}
+      <a class="btn btn-sm btn-client" href="{% url 'user:user_detail' u.pk %}" role="button" style="border-color: {{u.color}};">{{u}}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

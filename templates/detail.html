@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{object.name}}
+<a class="btn" href='{{object.get_change_url}}'>edit</a>
+{% endblock content %}

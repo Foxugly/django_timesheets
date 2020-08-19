@@ -1,0 +1,12 @@
+Django>=3.0.0
+django-hijack
+django-hijack-admin
+django-extensions
+jupyter
+django-debug-toolbar
+django-bootstrap4
+django-view-breadcrumbs
+django-durationwidget
+pip>=9.0.1
+django-colorfield
+django-bootstrap-modal-forms
