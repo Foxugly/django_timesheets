@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
 import os
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,13 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_bootstrap_breadcrumbs',
     'bootstrap_modal_forms',
-    #'view_breadcrumbs',
     'debug_toolbar',
     'hijack',
-    'compat',
-    'hijack_admin',
+    'hijack.contrib.admin',
     'bootstrap4',
     'durationwidget',
     'customuser',
@@ -146,6 +143,7 @@ HIJACK_ALLOW_GET_REQUESTS = True
 # if AUTH_USER_MODEL then HIJACK_REGISTER_ADMIN = False
 HIJACK_REGISTER_ADMIN = False
 AUTH_USER_MODEL = "customuser.CustomUser"
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if DEBUG:
     def show_toolbar(request):

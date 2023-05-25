@@ -1,31 +1,32 @@
-from tools.generic_class import GenericClass
+from datetime import timedelta
+
+from django.conf import settings
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+
 from tag.models import Tag
-from user.models import User
 from task.models import Task
 from timesheet.models import Timesheet
-from django.conf import settings
-from datetime import timedelta
-from django.utils import timezone
+from tools.generic_class import GenericClass
+from user.models import User
 
-# Create your models here.
+
 class Project(GenericClass):
-
     name = models.CharField(max_length=50, verbose_name=_("name"), )
     description = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("description"), )
     start_date = models.DateField(default=timezone.now)
     end_date = models.DateField(default=timezone.now)
     tags = models.ManyToManyField(Tag, blank=True, verbose_name=_("tags"), )
     users = models.ManyToManyField(User, blank=True, verbose_name=_("users"), )
-    refer_client = models.ForeignKey('client.Client', verbose_name=_('client'), related_name="back_project_client", null=True, on_delete=models.CASCADE, )
+    refer_client = models.ForeignKey('client.Client', verbose_name=_('client'), related_name="back_project_client",
+                                     null=True, on_delete=models.CASCADE, )
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, )
     creation_date = models.DateTimeField(auto_now_add=True, blank=True, )
-    tasks = models.ManyToManyField(Task, blank=True, verbose_name=_("tasks"),)
-    timesheets = models.ManyToManyField(Timesheet, blank=True, verbose_name=_("timesheets"),)
+    tasks = models.ManyToManyField(Task, blank=True, verbose_name=_("tasks"), )
+    timesheets = models.ManyToManyField(Timesheet, blank=True, verbose_name=_("timesheets"), )
     done = models.BooleanField(default=False)
     close_date = models.DateField(blank=True, null=True)
-
 
     def get_status(self):
         if self.done:
@@ -50,7 +51,7 @@ class Project(GenericClass):
     def get_total_duration(self):
         out = timedelta(seconds=0)
         for t in self.get_timesheets():
-            out+= t.get_duration()
+            out += t.get_duration()
         return out
 
     def get_users(self):
@@ -63,7 +64,7 @@ class Project(GenericClass):
         return self.tasks.all()
 
     def save(self, *args, **kwargs):
-        if self.done :
+        if self.done:
             if self.close_date is None:
                 self.close_date = datetime.now().date()
         super(Project, self).save(*args, **kwargs)
@@ -80,4 +81,4 @@ class Project(GenericClass):
     class Meta:
         verbose_name = _('projet')
         verbose_name_plural = _('projects')
-        ordering = ('name', )
+        ordering = ('name',)

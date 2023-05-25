@@ -1,4 +1,4 @@
-Django>=3.0.0
+Django>=4.2.1
 django-hijack
 django-hijack-admin
 django-extensions
@@ -7,6 +7,6 @@ django-debug-toolbar
 django-bootstrap4
 django-view-breadcrumbs
 django-durationwidget
-pip>=9.0.1
+pip
 django-colorfield
 django-bootstrap-modal-forms
